@@ -15,6 +15,7 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint",
+    "commit": "git-cz",
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
@@ -47,12 +48,13 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^8.1.1",
+    "cz-conventional-changelog": "3.3.0",
     "husky": "^8.0.3",
+    "semantic-release": "^20.0.2",
     "size-limit": "^8.1.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.4.1",
-    "typescript": "^4.9.4",
-    "semantic-release": "^20.0.2"
+    "typescript": "^4.9.4"
   },
   "repository": {
     "type": "git",
@@ -60,5 +62,10 @@
   },
   "publishConfig": {
     "access": "restricted"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
