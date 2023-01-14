@@ -21,7 +21,6 @@
     "analyze": "size-limit --why",
     "semantic-release": "semantic-release --branches main"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
