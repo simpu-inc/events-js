@@ -50,7 +50,7 @@ export class Simpu {
 
   init(o: string | { key: string }) {
     if (!o) {
-      throw new SimpuEventsError('You need to pass in your API key.');
+      throw new SimpuEventsError('You need to pass in your Public API key.');
     }
     if (typeof o === 'string') {
       this.key = o;
@@ -58,7 +58,7 @@ export class Simpu {
     }
 
     if (!o.key) {
-      throw new SimpuEventsError('`key` missing in object.');
+      throw new SimpuEventsError('`API key` missing in object.');
     }
     if (o.key) {
       this.key = `${o.key}`;
