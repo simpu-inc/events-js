@@ -61,7 +61,7 @@
     "url": "https://github.com/simpu-inc/events-js.git"
   },
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "config": {
     "commitizen": {
