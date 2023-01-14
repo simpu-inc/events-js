@@ -79,7 +79,7 @@ export class Simpu {
       throw new SimpuEventsError('User trait is required.');
     }
 
-    return this.request('/users', o, 'POST');
+    return this.request('/user', o, 'POST');
   }
 
   // Track events
