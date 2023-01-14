@@ -51,7 +51,7 @@ const request = (
 };
 
 // Initialize SDK and setup API Authorization
-const init = (o: { key: string }) => {
+export const init = (o: { key: string }) => {
   if (!o) {
     throw new SimpuEventsError('You need to pass in your API key.');
   }
@@ -69,7 +69,7 @@ const init = (o: { key: string }) => {
 };
 
 // Identify users
-const identify = async (o: { user_id: string; traits: object }) => {
+export const identify = async (o: { user_id: string; traits: object }) => {
   if (!o) {
     throw new SimpuEventsError(
       'You need to pass an object with at least a user id'
@@ -86,7 +86,7 @@ const identify = async (o: { user_id: string; traits: object }) => {
 };
 
 // Track events
-const track = async (o: {
+export const track = async (o: {
   user_id: string;
   event_key: string;
   properties?: object;
@@ -99,11 +99,4 @@ const track = async (o: {
   }
 
   return request('/event', o, 'POST');
-};
-
-module.exports = {
-  init,
-  identify,
-  track,
-  request,
 };
