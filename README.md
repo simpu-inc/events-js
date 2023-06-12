@@ -1,103 +1,87 @@
-# TSDX User Guide
+# Simpu Events JavaScript SDK
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+Simpu the only customer communication platform you'll ever need. Increase revenue and customer satisfaction with Simpu's best-in-class shared Inbox, Chatbot, Text & Email Marketing Platform.
 
-> This TSDX setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
+The Simpu Events JavaScript SDK allows you to automatically identifiy users and user attributes and track user actions on your site or application. It can be used both in Node.js or in the browser.
 
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
+## Installation and Setup
 
-## Commands
-
-TSDX scaffolds your new library inside `/src`.
-
-To run TSDX, use:
+To install the Simpu Events SDK, use:
 
 ```bash
-npm start # or yarn start
+npm install -save @simpu/events-js # or yarn add @simpu/events-js
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
-
-To do a one-off build, use `npm run build` or `yarn build`.
-
-To run tests, use `npm test` or `yarn test`.
+```bash
+import { Simpu } from '@simpu/events-js'
+```
 
 ## Configuration
 
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+You can initializing the Simpu Events SDK with a Simpu public API key using the following methods:
 
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle Analysis
-
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+```bash
+let simpu = new Simpu('YOUR_SIMPU_PUBLIC_API_KEY');
 ```
 
-### Rollup
-
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
+```bash
+let simpu = new Simpu();
+simpu.init({
+  key: 'YOUR_SIMPU_PUBLIC_API_KEY'
+})
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+```bash
+let simpu = new Simpu();
+simpu.init('YOUR_SIMPU_PUBLIC_API_KEY')
+```
 
-## Module Formats
+> The SDK identifies your application with the `key` parameter. Your can generate a public API key in your Simpu account dashboard.
 
-CJS, ESModules, and UMD module formats are supported.
+### Identifying users
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
+To track user events, actions, or user information in Simpu, we first need some basic details about the user. This includes a unique identification number, their email address and their name (optional). This information helps us connect and understand the user's data. You only have to provide this information once, typically during the user signup process.
 
-## Named Exports
+```bash
+simpu.identify({
+  user_id: '1234',
+  traits: {
+    first_name: 'John',
+    last_name: 'Doe',
+    email: 'test@example.com',
+  }
+})
+```
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
+`user_id` should be a unique identifier for the user in your application, it should be a value that will not change.
 
-## Including Styles
+If you need to update a users properties, you can call identify method with the new values for the properties to update.
 
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
+### Tracking user events
 
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
+Track user events/actions with the SDK like this:
 
-## Publishing to NPM
+```bash
+simpu.track({
+  user_id: '1234',
+  event_key: 'Campaign Paused',
+})
+```
 
-We recommend using [np](https://github.com/sindresorhus/np).
+Events with additional properties can be tracked as follows:
+
+```bash
+simpu.track({
+  user_id: '1234',
+  event_key: 'Campaign Paused',
+  properties: {
+    name: 'Test campaign',
+  },
+})
+```
+
+#### A note on values
+
+When tracking attributes and events, it is important you use the right data type for better segmentation. For example, instead of using a string value of `$10` for a price, you can use a number value so that numerical operators like equality, greater than, and less than can be used on the value.
+
+To track a date attribute, use a valid date format like `2023-06-12` or `2023-06-12T10:00:00Z`.
