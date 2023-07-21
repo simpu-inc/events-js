@@ -93,4 +93,21 @@ export class Simpu {
 
     return this.request('/event', o, 'POST');
   }
+
+  // Track pages
+  async page(o: {
+    user_id: string;
+    name: string;
+    properties?: object;
+    context?: object;
+  }) {
+    if (!o.user_id) {
+      throw new SimpuEventsError('User id is required.');
+    }
+    if (!o.name) {
+      throw new SimpuEventsError('Page name is required.');
+    }
+
+    return this.request('/page', o, 'POST');
+  }
 }
